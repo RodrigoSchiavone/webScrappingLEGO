@@ -2,18 +2,23 @@ from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 import pprint
 import re
+import pandas as pd
+from datetime import date
 
-def mercado_livre(text):
+def mercado_livre(text,itens,codLEGO,pesquisa):
     s = HTMLSession()
     url = text
-
-
+    
+    codLEGO = int(codLEGO)
+    pesqiusa = pesquisa
+    data = date.today()
 
     def getdata(url):
         r = s.get(url)
         print(r)
         soup = BeautifulSoup(r.text, 'html.parser')
         return soup
+        
 
     html = getdata(url)
     
@@ -24,6 +29,7 @@ def mercado_livre(text):
 
     span = html.find_all('span', class_="price-tag ui-search-price__part shops__price-part")
 
+    
     i = 0
     while i<len(span):
         span2 = span[i].find('span',class_="price-tag-amount")
@@ -37,19 +43,21 @@ def mercado_livre(text):
         i += 2
     card = html.find_all('div', {'class':re.compile('andes-card andes-card--flat andes-card--default ui-search-result shops__cardStyles ui-search-result--core.*')})
                                                      
-    link = []
-  
+   
     i = 0 
-    product = [[],[],[]]
-    
     while i < len(h2):
-        product[0].append(h2[i].string)
-        product[1].append(price[i])
+
+        nome = h2[i].string
+
+        preco = float(price[i].replace(',','.'))
+
         div = card[i].contents[0]
         a = div.contents[0]
-        product[2].append(a['href'])
-        #print(product[0][i]+" >> "+product[1][i]+" >> "+product[2][i])
-        #print("_____________________________________________________________________")
+        url = a['href']
         i += 1
+        itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': nome, 'preco': preco,'data': data, 'url': url})
 
-    return product
+ 
+    dataframe = pd.DataFrame(itens)
+    #print(dataframe)
+    return dataframe
