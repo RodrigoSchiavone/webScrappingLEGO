@@ -26,6 +26,7 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
 
 
     i = 0
+    j = 1
     while i < len(cards):
 
         div = cards[i].contents[0]
@@ -63,12 +64,18 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
         lenPesquisa = len(pesquisa)
         pesquisaStr =  pesquisa.replace('-', ' ')
         regex1 = '.*'+str(codLEGO)+'.*'
-        regex2 = '.*'+pesquisaStr[int(lenPesquisa / 2):]+'.*'
+        regex2 = '.*Manual*.'
+        #regex2 = '.*'+pesquisaStr[int(lenPesquisa / 2):]+'.*Lego*.'
+        #regex3 = '.*Lego*.'+pesquisaStr[int(lenPesquisa / 2):]+'.*'
+        #
        
         testRegex1 = re.match(regex1, name)
         testRegex2 = re.match(regex2, name)
+        #testRegex3 = re.match(regex3, name)
+        #testRegex4 = re.match(regex4, name)
 
-        if testRegex1 != None or testRegex2 != None:
+
+        if testRegex1 != None and testRegex2 == None: #or testRegex2 != None or testRegex3 != None) and testRegex4 == None:
             #print(str(codLEGO) + ' >> '+nome)
             itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url})
             #print('')
