@@ -21,43 +21,55 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
         
 
     html = getdata(url)
-    
+     
+    cards = html.find_all('div',class_="ui-search-result__content-wrapper shops__result-content-wrapper")
 
-    h2 = html.find_all('h2', class_="ui-search-item__title shops__item-title")
 
-    price = []
-
-    span = html.find_all('span', class_="price-tag ui-search-price__part shops__price-part")
-
-    
     i = 0
-    while i<len(span):
-        span2 = span[i].find('span',class_="price-tag-amount")
-        price_fraction = span2.find('span', class_="price-tag-fraction")
-        price_cents = span2.find('span', class_="price-tag-cents")
+    while i < len(cards):
 
-        if(price_cents != None):
-            price.append(price_fraction.string+","+price_cents.string)
-        else:
-            price.append(price_fraction.string+","+"00")
-        i += 2
-    card = html.find_all('div', {'class':re.compile('andes-card andes-card--flat andes-card--default ui-search-result shops__cardStyles ui-search-result--core.*')})
-                                                     
-   
-    i = 0 
-    while i < len(h2):
+        div = cards[i].contents[0]
+        a = div.find('a')
 
-        nome = h2[i].string
-
-        preco = float(price[i].replace(',','.'))
-
-        div = card[i].contents[0]
-        a = div.contents[0]
+        name = a.find('h2').string
         url = a['href']
-        i += 1
-        itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': nome, 'preco': preco,'data': data, 'url': url})
 
- 
+
+
+        divPrice = cards[i].contents[1]
+
+        divPrice2 = divPrice.find('span', class_="price-tag ui-search-price__part shops__price-part")
+
+        #print(len(divPrice.find_all('div', class_="ui-search-price ui-search-price--size-medium shops__price")))
+        priceAmount = divPrice2.find('span', class_="price-tag-amount")
+        
+
+        price_fraction = priceAmount.find('span', class_="price-tag-fraction")
+        price_cents = priceAmount.find('span', class_="price-tag-cents")
+
+        if price_cents != None:
+            price = price_fraction.string+','+price_cents.string
+        else:
+            price = price_fraction.string+',00'
+        
+    
+        lenPesquisa = len(pesquisa)
+        pesquisaStr =  pesquisa.replace('-', ' ')
+        regex1 = '.*'+str(codLEGO)+'.*'
+        regex2 = '.*'+pesquisaStr[int(lenPesquisa / 2):]+'.*'
+       
+
+
+        if re.match(regex1, name) or re.match(regex2, name):
+            #print(str(codLEGO) + ' >> '+nome)
+            itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url})
+            print('')
+
+        i += 1
+   
+    
     dataframe = pd.DataFrame(itens)
     #print(dataframe)
+    print(str(codLEGO) + ' ' + pesquisa)
+    print('____________________________________________________________________________')
     return dataframe

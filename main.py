@@ -1,19 +1,38 @@
 from mercado_livre import mercado_livre
 import pandas as pd
+from unidecode import unidecode
 
-
-lista = [['10981','Cenoura-Crescendo'],['31138','Trailer-de-Praia']]
+product = []
+#lista = [['10981','Cenoura-Crescendo'],['31138','Trailer-de-Praia']]
 
 i = 0
-product = []
 
+dataframe = pd.read_excel('test.xlsx')
+dictionary = dataframe.to_dict()
+print(dictionary['codLEGO'][0])
 
-itens = []
-while i < len(lista):
+codLEGO = []
+for item in dictionary['nome']:
     
-    url = "https://lista.mercadolivre.com.br/lego-"+lista[i][0]+"-"+lista[i][1]
-    product = mercado_livre(url, itens, lista[i][0],lista[i][1])
+    dictionary['nome'][item] = dictionary['nome'][item].replace('-',' ')
+    dictionary['nome'][item] = dictionary['nome'][item].replace(' ','-')
+    dictionary['nome'][item] = dictionary['nome'][item].replace('™','')
+    dictionary['nome'][item] = dictionary['nome'][item].replace('®','')
+    dictionary['nome'][item] = unidecode(dictionary['nome'][item])
+
+    dictionary['codLEGO'][item] = str(dictionary['codLEGO'][item])
+   
+    i += 1
+#print(dictionary)
+#™ ®
+itens = []
+i = 0
+while i < len(dictionary['codLEGO']):
+    
+    url = "https://lista.mercadolivre.com.br/lego-"+dictionary['codLEGO'][i]+"-"+dictionary['nome'][i]
+    product = mercado_livre(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
     i += 1
 
-product.to_excel('./precos_mercado_livre.xlsx')
+#print(product)
+product.to_excel('./precos_mercado_livre.xlsx', index=False)
 

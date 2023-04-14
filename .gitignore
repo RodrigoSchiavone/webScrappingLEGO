@@ -10,6 +10,10 @@ __pycache__/
 # C extensions
 *.so
 
+#excel
+test.xlsx
+precos_mercado_livre.xlsx
+
 # Distribution / packaging
 .Python
 build/
