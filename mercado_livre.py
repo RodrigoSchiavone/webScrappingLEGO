@@ -30,40 +30,48 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
 
         div = cards[i].contents[0]
         a = div.find('a')
-
-        name = a.find('h2').string
-        url = a['href']
+        if a != None:
+            name = a.find('h2').string
+            url = a['href']
+        else:
+            name = 'invalid'
+            url = 'invalid'
+            print('"a" NoneType')
 
 
 
         divPrice = cards[i].contents[1]
-
+        
         divPrice2 = divPrice.find('span', class_="price-tag ui-search-price__part shops__price-part")
-
-        #print(len(divPrice.find_all('div', class_="ui-search-price ui-search-price--size-medium shops__price")))
-        priceAmount = divPrice2.find('span', class_="price-tag-amount")
+        if divPrice2 != None:
+            #print(len(divPrice.find_all('div', class_="ui-search-price ui-search-price--size-medium shops__price")))
+            priceAmount = divPrice2.find('span', class_="price-tag-amount")
         
 
-        price_fraction = priceAmount.find('span', class_="price-tag-fraction")
-        price_cents = priceAmount.find('span', class_="price-tag-cents")
+            price_fraction = priceAmount.find('span', class_="price-tag-fraction")
+            price_cents = priceAmount.find('span', class_="price-tag-cents")
 
-        if price_cents != None:
-            price = price_fraction.string+','+price_cents.string
+            if price_cents != None:
+                price = price_fraction.string+','+price_cents.string
+            else:
+                price = price_fraction.string+',00'
         else:
-            price = price_fraction.string+',00'
-        
+            price = '0,00'
+            print('price NoneType')
     
+
         lenPesquisa = len(pesquisa)
         pesquisaStr =  pesquisa.replace('-', ' ')
         regex1 = '.*'+str(codLEGO)+'.*'
         regex2 = '.*'+pesquisaStr[int(lenPesquisa / 2):]+'.*'
        
+        testRegex1 = re.match(regex1, name)
+        testRegex2 = re.match(regex2, name)
 
-
-        if re.match(regex1, name) or re.match(regex2, name):
+        if testRegex1 != None or testRegex2 != None:
             #print(str(codLEGO) + ' >> '+nome)
             itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url})
-            print('')
+            #print('')
 
         i += 1
    

@@ -18,6 +18,8 @@ for item in dictionary['nome']:
     dictionary['nome'][item] = dictionary['nome'][item].replace(' ','-')
     dictionary['nome'][item] = dictionary['nome'][item].replace('™','')
     dictionary['nome'][item] = dictionary['nome'][item].replace('®','')
+    dictionary['nome'][item] = dictionary['nome'][item].replace('(','')
+    dictionary['nome'][item] = dictionary['nome'][item].replace(')','')
     dictionary['nome'][item] = unidecode(dictionary['nome'][item])
 
     dictionary['codLEGO'][item] = str(dictionary['codLEGO'][item])
