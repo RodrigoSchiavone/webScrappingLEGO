@@ -1,4 +1,5 @@
 from mercado_livre import mercado_livre
+from amazon import amzon
 import pandas as pd
 from unidecode import unidecode
 
@@ -36,6 +37,17 @@ while i < len(dictionary['codLEGO']):
     product = mercado_livre(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
     i += 1
 
-#print(product)
+print(product)
 product.to_excel('./precos_mercado_livre.xlsx', index=False)
+
+i = 0
+
+while i < len(dictionary['codLEGO']):
+    
+    url = "https://www.amazon.com.br/s?k=lego-"+dictionary['codLEGO'][i]+"-"+dictionary['nome'][i]
+    product = amzon(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
+    i += 1
+
+#print(product)
+product.to_excel('./precos_amazon.xlsx', index=False)
 

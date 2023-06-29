@@ -77,7 +77,7 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
 
         if testRegex1 != None and testRegex2 == None: #or testRegex2 != None or testRegex3 != None) and testRegex4 == None:
             #print(str(codLEGO) + ' >> '+nome)
-            itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url})
+            itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url,'marketplace':'mercado livre'})
             #print('')
 
         i += 1
@@ -86,5 +86,6 @@ def mercado_livre(text,itens,codLEGO,pesquisa):
     dataframe = pd.DataFrame(itens)
     #print(dataframe)
     print(str(codLEGO) + ' ' + pesquisa)
+    print('Mercado livre')
     print('____________________________________________________________________________')
     return dataframe
