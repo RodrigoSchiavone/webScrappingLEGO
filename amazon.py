@@ -41,7 +41,7 @@ def amzon(text,itens,codLEGO,pesquisa):
             
         else:
             nome = 'invalid'
-            print = 'invalid name'
+            print('invalid name')
 
         spanPrice = div.find('span',class_='a-price')
 

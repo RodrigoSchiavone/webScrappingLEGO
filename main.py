@@ -31,14 +31,14 @@ for item in dictionary['nome']:
 #™ ®
 itens = []
 i = 0
-while i < len(dictionary['codLEGO']):
+#while i < len(dictionary['codLEGO']):
     
-    url = "https://lista.mercadolivre.com.br/lego-"+dictionary['codLEGO'][i]+"-"+dictionary['nome'][i]
-    product = mercado_livre(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
-    i += 1
+#    url = "https://lista.mercadolivre.com.br/lego-"+dictionary['codLEGO'][i]+"-"+dictionary['nome'][i]
+#    product = mercado_livre(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
+#    i += 1
 
-print(product)
-product.to_excel('./precos_mercado_livre.xlsx', index=False)
+#print(product)
+#product.to_excel('./precos_mercado_livre.xlsx', index=False)
 
 i = 0
 
