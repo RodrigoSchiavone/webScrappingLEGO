@@ -5,7 +5,7 @@ from unidecode import unidecode
 
 product = []
 #lista = [['10981','Cenoura-Crescendo'],['31138','Trailer-de-Praia']]
-#pip install requests_html pandas unidecode openpyxl
+#pip install requests_html pandas unidecode openpyxl prettyprinter
 
 i = 0
 
