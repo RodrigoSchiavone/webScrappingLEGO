@@ -70,7 +70,7 @@ def amzon(text,itens,codLEGO,pesquisa):
 
         if testRegex1 != None and testRegex2 == None: #or testRegex2 != None or testRegex3 != None) and testRegex4 == None:
             #print(str(codLEGO) + ' >> '+nome)
-            itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': url,'marketplace':'amazon'})
+            itens.append({'codLEGO':codLEGO,'pesquisa':pesquisa,'nome': name, 'preco': price,'data': data, 'url': link,'marketplace':'amazon'})
             #print('')
         
         i += 1
