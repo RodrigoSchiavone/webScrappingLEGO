@@ -17,7 +17,7 @@ codLEGO = []
 for item in dictionary['nome']:
     
     dictionary['nome'][item] = dictionary['nome'][item].replace('-',' ')
-    dictionary['nome'][item] = dictionary['nome'][item].replace(' ','-')
+    #dictionary['nome'][item] = dictionary['nome'][item].replace(' ','-')
     dictionary['nome'][item] = dictionary['nome'][item].replace('™','')
     dictionary['nome'][item] = dictionary['nome'][item].replace('®','')
     dictionary['nome'][item] = dictionary['nome'][item].replace('(','')
@@ -44,7 +44,7 @@ i = 0
 
 while i < len(dictionary['codLEGO']):
     
-    url = "https://www.amazon.com.br/s?k=lego-"+dictionary['codLEGO'][i]+"-"+dictionary['nome'][i]
+    url = "https://www.amazon.com.br/s?k=lego+"+dictionary['codLEGO'][i]+"+"+dictionary['nome'][i]
     product = amzon(url, itens, dictionary['codLEGO'][i],dictionary['nome'][i])
     i += 1
 
