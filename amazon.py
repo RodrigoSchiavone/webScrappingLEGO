@@ -18,6 +18,8 @@ def amzon(text,itens,codLEGO,pesquisa):
     def getdata(url):
         r = s.get(url,headers = HEADERS)
         print(r)
+        if not r:
+            getdata(url)
         soup = BeautifulSoup(r.text, 'html.parser')
         return soup
         
